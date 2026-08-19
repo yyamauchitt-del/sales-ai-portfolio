@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>現場の営業に、AIの夜明けを。｜営業 × AIコンサル</title>
+  <meta name="description" content="Time is Money. 営業の時間を、価値へ。IT営業歴20年、日常の営業8業務でAIを実践中。日常業務での削減時間の目安を数字で。まず30分、壁打ちから。" />
+
+  <!-- OGP（本番公開時にURL・画像を差し替え） -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="現場の営業に、AIの夜明けを。" />
+  <meta property="og:description" content="Time is Money. 営業の時間を、価値へ。営業現場でAIを実践し、削減時間の目安をまとめています。まず30分、壁打ちから。" />
+
+  <!-- フォント: Noto Sans JP（本番はGoogle Fonts、取得できない環境ではsystem fallback） -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      /* == ブランドカラー（夜明け前 → 朝 → 新しい一日） == */
+      --night: #0D1330;
+      --indigo-deep: #16295A;
+      --navy-cobalt: #1C3C7A;    /* Impact面 */
+      --cobalt: #2456A8;         /* Practice面・主役① */
+      --sunrise: #4A86E0;        /* CTA核・主要アクセント（主役②） */
+
+      --sky-pale:  #DCE8FB;      /* Sales AIラボ面（朝の光の始まり） */
+      --sky-pale2: #E9F1FC;      /* About面 */
+      --mist:      #F2F7FE;      /* Works面 */
+      --paper-white: #F8FBFF;    /* Building面・フッター系明面カード地 */
+
+      --paper: #EEF2FB;          /* 暗面の本文 */
+      --sky-light: #A8C8F5;      /* 深い暗面（Hero等）の補助・ラベル */
+      --sky-bright: #C7DCF9;     /* 暗面の補助・ラベル（コバルト面でもAA確保） */
+      --ink: #0D1330;            /* 明面の本文 */
+      --ink-muted: #3B4570;      /* 明面の補助 */
+      --deep-blue-text: #23568F; /* 明面のリンク・英字ラベル（AA 6.7:1） */
+
+      --purple: #B0478F;         /* アクセント（朝焼け・地平線・見出し強調のみ／本文不可） */
+      --purple-deep: #7D2F66;    /* バッジ地 */
+      --ember: #F2A15C;          /* 暖色の差し色（アクセント/グロー・本文不可） */
+      --coral: #F0805E;          /* 暖色の差し色（やや強め・朝日のハイライト） */
+
+      --radius: 12px;
+      --maxw: 1080px;
+
+      --font-sans: "Noto Sans JP", -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, sans-serif;
+    }
+
+    /* 明暗セクションのトークン切替 */
+    .on-dark {
+      --text: var(--paper);
+      --muted: var(--sky-bright);
+      --label: var(--sky-bright);
+      --link: var(--sky-bright);
+      --card-bg: rgba(238, 242, 251, 0.035);
+      --card-border: rgba(238, 242, 251, 0.12);
+      --card-shadow: none;
+      --border: rgba(238, 242, 251, 0.10);
+      color: var(--paper);
+    }
+    .on-light {
+      --text: var(--ink);
+      --muted: var(--ink-muted);
+      --label: var(--deep-blue-text);
+      --link: var(--deep-blue-text);
+      --card-bg: #FFFFFF;
+      --card-border: rgba(13, 19, 48, 0.08);
+      --card-shadow: 0 10px 30px rgba(20, 45, 95, 0.07);
+      --border: rgba(13, 19, 48, 0.10);
+      color: var(--ink);
+    }
+
+    /* セクション背景（夜明けの進行） */
+    /* ベタ塗り感を減らし、朝焼けの光（放射グラデ）で奥行きと未来感を出す（世界観・AA維持） */
+    .bg-impact   {
+      background:
+        radial-gradient(95% 62% at 50% -10%, rgba(74, 134, 224, 0.34) 0%, transparent 60%),
+        radial-gradient(60% 46% at 90% -4%, rgba(242, 161, 94, 0.16) 0%, transparent 55%),
+        linear-gradient(180deg, #21437A 0%, #1C3C7A 50%, #16305F 100%);
+    }
+    .bg-practice {
+      background:
+        radial-gradient(85% 58% at 50% -8%, rgba(126, 174, 242, 0.34) 0%, transparent 58%),
+        radial-gradient(55% 45% at 88% -2%, rgba(242, 161, 94, 0.12) 0%, transparent 52%),
+        linear-gradient(180deg, #2D60B6 0%, #2456A8 52%, #1E4A92 100%);
+    }
+    .bg-lab      {
+      background:
+        radial-gradient(70% 52% at 84% -2%, rgba(242, 161, 94, 0.14) 0%, transparent 55%),
+        radial-gradient(80% 58% at 12% 0%, rgba(74, 134, 224, 0.14) 0%, transparent 55%),
+        linear-gradient(180deg, #E8F0FD 0%, #DCE8FB 55%, #D2E1F9 100%);
+    }
+    .bg-about    {
+      background:
+        radial-gradient(68% 50% at 86% 4%, rgba(176, 71, 143, 0.10) 0%, transparent 55%),
+        linear-gradient(180deg, #F0F5FE 0%, #E7EFFB 100%);
+    }
+    .bg-works    { background: var(--mist); }
+    .bg-building {
+      background:
+        radial-gradient(80% 55% at 50% -8%, rgba(74, 134, 224, 0.13) 0%, transparent 60%),
+        radial-gradient(55% 45% at 90% 0%, rgba(242, 161, 94, 0.10) 0%, transparent 55%),
+        linear-gradient(180deg, #FFFFFF 0%, #EFF6FF 100%);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: var(--font-sans);
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--ink);
+      background: var(--paper-white);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    h1, h2, h3 { line-height: 1.4; margin: 0; font-weight: 800; }
+    p { margin: 0; }
+    a { color: var(--link, var(--sunrise)); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    a:focus-visible,
+    .btn:focus-visible,
+    .hamburger:focus-visible,
+    .nav-links a:focus-visible {
+      outline: 2px solid var(--sunrise);
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
+
+    .wrap { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+
+    /* スクロール連動の静かな立ち上がり */
+    .js .reveal { opacity: 0; transform: translateY(20px); transition: opacity .7s ease, transform .7s ease; }
+    .js .reveal.in { opacity: 1; transform: none; }
+    /* グリッド内の要素は少しだけ時間差で立ち上げる（stagger）。reduced-motion時は下の共通ルールで無効化 */
+    .js .impact-cases .case:nth-child(2), .js .lab-cards .lab-card:nth-child(2), .js .profile-cols .profile-col:nth-child(2) { transition-delay: .08s; }
+    .js .impact-cases .case:nth-child(3), .js .lab-cards .lab-card:nth-child(3), .js .profile-cols .profile-col:nth-child(3) { transition-delay: .16s; }
+    .js .cards .card:nth-child(4n+2) { transition-delay: .05s; }
+    .js .cards .card:nth-child(4n+3) { transition-delay: .10s; }
+    .js .cards .card:nth-child(4n+4) { transition-delay: .15s; }
+
+    section { padding: 116px 0; position: relative; }
+
+    .horizon::before {
+      content: "";
+      position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(74, 134, 224, 0.55) 30%, rgba(176, 71, 143, 0.34) 62%, rgba(242, 161, 94, 0.24) 82%, transparent);
+    }
+
+    .section-head { max-width: 680px; margin-bottom: 56px; }
+    .kicker {
+      display: flex; align-items: center; gap: 14px;
+      font-size: 12px; font-weight: 700; letter-spacing: .22em;
+      color: var(--label); text-transform: uppercase; margin: 0 0 18px;
+    }
+    .kicker .n { font-variant-numeric: tabular-nums; }
+    .kicker .line { flex: 0 0 44px; height: 1px; background: linear-gradient(90deg, var(--label), transparent); opacity: .7; }
+    .section-head h2 { font-size: clamp(24px, 3.6vw, 32px); letter-spacing: .01em; color: var(--text); }
+    /* 明面セクション（03 Sales AIラボ以降）の大見出しは、黒系→ブランドの濃いブルーへ（夜明け・ブルーの世界観に接続） */
+    .on-light .section-head h2 { color: var(--cobalt); }
+    /* Aboutの見出しはPCで1行表示（見出し幅を広げて対応・文字サイズは維持） */
+    #about .section-head { max-width: 920px; }
+    #about .section-head h2 { white-space: nowrap; }
+    .section-head .section-lead { color: var(--muted); margin-top: 16px; font-size: 15.5px; }
+
+    .todo {
+      display: inline-block; font-size: 0.82em; color: var(--muted);
+      background: rgba(74, 134, 224, 0.08);
+      border: 1px dashed rgba(74, 134, 224, 0.5);
+      border-radius: 6px; padding: 1px 8px; letter-spacing: 0.02em;
+    }
+
+    /* ---------- ヘッダー ---------- */
+    header {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(248, 251, 255, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(13, 19, 48, 0.08);
+    }
+    .nav { display: flex; align-items: center; justify-content: space-between; height: 66px; }
+    .brandmark { font-weight: 800; font-size: 17px; color: var(--ink); letter-spacing: .01em; white-space: nowrap; }
+    .brandmark .x { color: var(--sunrise); padding: 0 2px; }
+    .brandmark small { display: block; font-size: 11px; font-weight: 400; color: var(--ink-muted); letter-spacing: .04em; }
+    .nav-links { display: flex; align-items: center; gap: 24px; }
+    .nav-links a { color: var(--ink); font-size: 14px; font-weight: 500; }
+    .nav-links a:hover { color: var(--cobalt); text-decoration: none; }
+
+    /* ボタン */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+      font-weight: 700; font-size: 15px; border-radius: 10px; padding: 13px 24px;
+      cursor: pointer; border: 1.5px solid transparent;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+      white-space: nowrap;
+    }
+    .btn .arw { transition: transform .18s ease; }
+    .btn:hover .arw { transform: translateX(4px); }
+    /* 主役CTA：サンライズブルー→朝日（アンバー/コーラル）のグラデ＋発光シャドウで最も目立たせる */
+    .btn-primary { background: linear-gradient(120deg, #4A86E0 0%, #6E90E4 32%, #F4A35E 76%, #F0805E 100%); color: var(--night); border-color: transparent; box-shadow: 0 12px 28px rgba(240, 128, 94, 0.40), 0 4px 12px rgba(74, 134, 224, 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.38); }
+    .btn-primary:hover { text-decoration: none; transform: translateY(-3px); box-shadow: 0 20px 40px rgba(240, 128, 94, 0.52), 0 8px 18px rgba(74, 134, 224, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.45); }
+    .btn-secondary { background: rgba(13, 19, 48, 0.35); color: var(--paper); border-color: var(--sunrise); }
+    .btn-secondary:hover { text-decoration: none; background: rgba(74, 134, 224, 0.16); }
+    .nav .btn { padding: 9px 18px; font-size: 14px; color: var(--night); }
+
+    .hamburger { display: none; background: none; border: none; cursor: pointer; width: 46px; height: 46px; padding: 10px; }
+    .hamburger span { display: block; height: 2px; background: var(--ink); margin: 5px 0; border-radius: 2px; transition: .2s; }
+
+    /* ---------- ヒーロー（夜明け前・世界観） ---------- */
+    .hero {
+      position: relative; overflow: hidden;
+      /* 海辺の夜明け写真を、写真本来の色を活かして見せる。暗くするのは全面ではなく「中央のテキスト背後」に限定した局所スクリム＋ごく薄い上下グラデーションのみ。最下層は画像読込失敗時のフォールバック */
+      background:
+        radial-gradient(66% 42% at 50% 44%, rgba(9, 15, 38, 0.55) 0%, rgba(9, 15, 38, 0.34) 40%, rgba(9, 15, 38, 0.12) 60%, transparent 74%),
+        linear-gradient(180deg, rgba(11, 17, 42, 0.50) 0%, rgba(12, 20, 48, 0.21) 20%, transparent 40%, transparent 82%, rgba(12, 22, 50, 0.16) 100%),
+        url('assets/hero-sunrise.jpg') center 42% / cover no-repeat,
+        linear-gradient(180deg, #14224A 0%, #182F62 58%, #1C3A73 100%);
+      padding: 108px 0 100px;
+      color: var(--paper);
+    }
+    .hero::after {
+      content: ""; position: absolute; left: -10%; right: -10%; bottom: -58%; height: 95%;
+      background: radial-gradient(ellipse at center top, rgba(255, 214, 170, 0.08) 0%, rgba(240, 128, 94, 0.05) 40%, transparent 68%);
+      pointer-events: none;
+    }
+    .hero .wrap { position: relative; z-index: 2; }
+    /* Heroコンテンツは中央寄せ・幅を絞ってバランス配置 */
+    .hero-inner { max-width: 860px; margin: 0 auto; text-align: center; }
+    /* ロゴは箱で囲わず、下から光が差すような淡い朝焼けグラデーションを敷く（上は透明） */
+    .hero-logo-wrap {
+      display: inline-block; margin: 0 0 20px; padding: 18px 34px 24px;
+      background:
+        radial-gradient(76% 94% at 50% 126%, rgba(176, 71, 143, 0.62) 0%, rgba(129, 88, 168, 0.36) 40%, rgba(74, 134, 224, 0.20) 58%, transparent 76%),
+        linear-gradient(0deg, rgba(176, 71, 143, 0.20) 0%, transparent 62%);
+    }
+    .hero-logo { display: block; width: clamp(300px, 34vw, 400px); height: auto; }
+    .hero-eyebrow { font-size: 13px; font-weight: 700; letter-spacing: .26em; color: var(--sky-light); margin-bottom: 22px; }
+    /* PCでは1行（nowrap）。タブレット・スマホでは折り返す（≤900pxで解除） */
+    .hero h1 { font-size: clamp(30px, 4.8vw, 48px); font-weight: 800; letter-spacing: .015em; line-height: 1.3; color: var(--paper); white-space: nowrap; }
+    .hero .diff { font-size: clamp(17px, 2.4vw, 21px); font-weight: 700; color: var(--sky-light); margin: 24px auto 0; max-width: 30em; }
+    .hero .lead { margin: 20px auto 0; font-size: 16px; color: var(--paper); max-width: 32em; }
+    .hero-cta { margin-top: 30px; display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+    /* 写真を暗くせず、文字側の局所シャドウで可読性を確保 */
+    .hero-eyebrow, .hero h1, .hero .diff, .hero .lead { text-shadow: 0 2px 14px rgba(6, 12, 32, 0.60), 0 1px 3px rgba(6, 12, 32, 0.55); }
+
+    .scroll-cue { position: absolute; left: 50%; bottom: 26px; transform: translateX(-50%); z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 8px; color: var(--sky-light); }
+    .scroll-cue span { font-size: 10px; letter-spacing: .28em; text-transform: uppercase; }
+    .scroll-cue .scroll-line { width: 1px; height: 34px; background: linear-gradient(180deg, var(--sky-light), transparent); }
+    .js .scroll-cue { animation: cue 2.4s ease-in-out infinite; }
+    @keyframes cue { 0%,100% { opacity: .5; } 50% { opacity: 1; } }
+
+    /* ---------- IMPACT（Time is Money・成果） ---------- */
+    .impact-catch { font-size: clamp(26px, 4.2vw, 40px); line-height: 1.3; color: var(--text); }
+    .impact-catch .tim { color: var(--sky-bright); }
+    .impact-headline { position: relative; text-align: center; margin: 8px 0 40px; }
+    /* 合計数字の背後に、ごく淡い暖色グロー（差し色） */
+    .impact-headline::before { content: ""; position: absolute; left: 50%; top: -14%; width: 460px; max-width: 88%; height: 170px; transform: translateX(-50%); background: radial-gradient(ellipse at center, rgba(242, 161, 94, 0.26), rgba(240, 128, 94, 0.12) 45%, rgba(176, 71, 143, 0.08) 62%, transparent 74%); pointer-events: none; z-index: 0; }
+    .impact-headline > * { position: relative; z-index: 1; }
+    /* 合計数字は朝日のグラデーション（暖色→サンライズ）で主役化。フォールバック色でAA担保 */
+    .impact-total-value { font-size: clamp(48px, 9vw, 90px); font-weight: 800; line-height: 1.0; letter-spacing: -.01em; color: #FFE3C2; background: linear-gradient(96deg, #FFDCA8 0%, #FFB57C 32%, #86B6FF 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 8px 30px rgba(242, 161, 94, 0.22); }
+    .impact-total-value .todo { font-size: clamp(18px, 3vw, 22px); vertical-align: middle; }
+    .impact-total-value .u { font-size: .32em; font-weight: 700; margin-left: 8px; color: var(--sky-bright); -webkit-text-fill-color: var(--sky-bright); background: none; text-shadow: none; }
+    .impact-total-unit { font-size: 14px; font-weight: 700; color: var(--sky-bright); letter-spacing: .04em; margin-top: 12px; }
+    .impact-formula { font-size: 12.5px; color: var(--sky-bright); margin-top: 10px; }
+
+    .impact-cases { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+    .case { position: relative; overflow: hidden; background: linear-gradient(180deg, rgba(255, 255, 255, 0.13), rgba(255, 255, 255, 0.04)); border: 1px solid rgba(238, 242, 251, 0.22); border-radius: var(--radius); padding: 32px 26px 28px; box-shadow: 0 20px 46px rgba(4, 10, 30, 0.44), inset 0 1px 0 rgba(255, 255, 255, 0.16); transition: transform .18s ease, box-shadow .18s ease; }
+    .case:hover { transform: translateY(-4px); box-shadow: 0 28px 56px rgba(4, 10, 30, 0.52), inset 0 1px 0 rgba(255, 255, 255, 0.2); }
+    /* カード上部の暖色アクセントバー（青→紫→朝日）を太く・鮮やかに */
+    .case::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--sunrise) 0%, var(--purple) 52%, var(--coral) 100%); }
+    /* 右上に朝日のコーナーグロー */
+    .case::after { content: ""; position: absolute; right: -50px; top: -50px; width: 170px; height: 170px; background: radial-gradient(circle, rgba(242, 161, 94, 0.16), transparent 68%); pointer-events: none; z-index: 0; }
+    .case > * { position: relative; z-index: 1; }
+    .case-name { font-size: 13px; font-weight: 700; letter-spacing: .06em; color: var(--sky-bright); }
+    .case-save { font-size: clamp(28px, 4.4vw, 40px); font-weight: 800; color: var(--text); margin: 8px 0 4px; line-height: 1.1; }
+    .case-save .todo { font-size: 16px; vertical-align: middle; }
+    .case-save .u { font-size: .4em; font-weight: 700; margin-left: 4px; color: var(--muted); }
+    .case-metrics { margin: 16px 0 0; padding: 0; display: grid; gap: 0; }
+    .case-metrics > div { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; border-top: 1px solid var(--border); padding: 10px 0; }
+    .case-metrics dt { margin: 0; font-size: 12.5px; color: var(--muted); }
+    .case-metrics dd { margin: 0; font-size: 14px; font-weight: 700; color: var(--text); }
+    .case-note { margin-top: 14px; font-size: 12px; color: var(--muted); line-height: 1.6; }
+    /* Human in the Loop：AI支援と人の最終判断を1事例内で区別表示 */
+    .case-hitl { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border); display: grid; gap: 8px; }
+    .case-hitl p { margin: 0; font-size: 12px; color: var(--muted); line-height: 1.6; }
+    .case-hitl .hitl-ai { color: var(--sky-bright); font-weight: 800; }
+    .case-hitl .hitl-human { color: var(--paper); font-weight: 800; }
+
+    .impact-support { margin-top: 32px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; font-size: 13.5px; color: var(--sky-bright); }
+    .impact-support b { color: var(--text); font-weight: 800; }
+    .impact-support .dot-sep { opacity: .55; }
+    .honesty { margin-top: 22px; font-size: 13px; color: var(--muted); }
+
+    /* ---------- 8業務グリッド ---------- */
+    .cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+    /* 8業務カード：コバルト面で少し立体的に（背景コントラスト・境界・控えめな影） */
+    .card { position: relative; overflow: hidden; background: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05)); border: 1px solid rgba(238, 242, 251, 0.24); border-radius: var(--radius); padding: 24px 22px; box-shadow: 0 14px 30px rgba(4, 10, 30, 0.36), inset 0 1px 0 rgba(255, 255, 255, 0.18); transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease; }
+    /* 上部の朝焼けアクセントバー（青→紫→朝日）。通常は控えめ、ホバーで鮮やかに */
+    .card::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--sunrise) 0%, var(--purple) 58%, var(--ember) 100%); opacity: .6; transition: opacity .18s ease; }
+    .card:hover { transform: translateY(-6px); border-color: rgba(74, 134, 224, 0.75); box-shadow: 0 24px 46px rgba(4, 10, 30, 0.46), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
+    .card:hover::before { opacity: 1; }
+    /* 業務アイコン（統一の線画）＋番号を上部に並べる。アイコンは小さな光沢タイルに載せて立体感 */
+    .card-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+    .card-ico { width: 44px; height: 44px; border-radius: 12px; display: inline-flex; align-items: center; justify-content: center; color: #EAF3FF; background: linear-gradient(155deg, rgba(74, 134, 224, 0.50), rgba(36, 86, 168, 0.34)); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.30), 0 6px 14px rgba(4, 10, 30, 0.32); }
+    .card-ico svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.85; stroke-linecap: round; stroke-linejoin: round; opacity: 1; filter: drop-shadow(0 1px 2px rgba(4, 10, 30, 0.35)); }
+    .card .num { font-size: 20px; font-weight: 800; color: var(--label); opacity: .9; letter-spacing: .04em; font-variant-numeric: tabular-nums; }
+    .card h3 { font-size: 16px; margin: 0 0 8px; color: var(--text); }
+    .card-status { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .04em; padding: 2px 9px; border-radius: 999px; margin-bottom: 12px; }
+    .on-dark .card-status.active  { color: var(--paper); background: rgba(74, 134, 224, 0.24); }
+    .on-dark .card-status.partial { color: var(--paper); background: rgba(168, 200, 245, 0.18); }
+    .on-light .card-status.active  { color: var(--deep-blue-text); background: rgba(36, 86, 168, 0.12); }
+    .on-light .card-status.partial { color: var(--ink-muted); background: rgba(13, 19, 48, 0.06); }
+    .card p { font-size: 13.5px; color: var(--muted); line-height: 1.7; }
+
+    /* ---------- Sales AIラボ（AI Consulting） ---------- */
+    /* Sales AIラボの進め方：番号付きノード＋ラインアイコン＋接続ライン（PC横フロー） */
+    .lab-flow { list-style: none; margin: 0 0 44px; padding: 0; display: flex; align-items: flex-start; }
+    .lab-step { position: relative; flex: 1; display: flex; flex-direction: column; align-items: center; text-align: center; padding: 0 8px; }
+    /* ノード間の接続ライン（サンライズ→朝焼けパープル・ノードの背面） */
+    .lab-step:not(:last-child)::after {
+      content: ""; position: absolute; top: 26px; left: 50%; width: 100%; height: 4px; z-index: 1; border-radius: 3px;
+      background: linear-gradient(90deg, var(--sunrise) 0%, #8158A8 50%, var(--ember) 100%);
+      box-shadow: 0 2px 10px rgba(74, 134, 224, 0.40);
+    }
+    .lab-node {
+      position: relative; z-index: 2; width: 54px; height: 54px; border-radius: 50%;
+      background: linear-gradient(160deg, #FFFFFF 0%, #E6F0FE 100%); border: 1px solid rgba(36, 86, 168, 0.22);
+      box-shadow: 0 12px 24px rgba(20, 45, 95, 0.24), 0 0 0 7px rgba(74, 134, 224, 0.10), inset 0 1px 0 #FFFFFF;
+      display: flex; align-items: center; justify-content: center; color: var(--cobalt);
+    }
+    /* 終点（中小IT企業へ還元）は朝日色のリングで到達＝夜明けを表現 */
+    .lab-step:last-child .lab-node { box-shadow: 0 12px 24px rgba(20, 45, 95, 0.24), 0 0 0 7px rgba(242, 161, 94, 0.20), inset 0 1px 0 #FFFFFF; }
+    .lab-step:last-child .lab-idx { background: linear-gradient(160deg, var(--ember), var(--coral)); }
+    .lab-node svg { width: 25px; height: 25px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .lab-idx {
+      position: absolute; top: -6px; right: -6px; min-width: 19px; height: 19px; padding: 0 4px;
+      border-radius: 999px; background: linear-gradient(160deg, var(--sunrise), var(--cobalt)); color: #FFFFFF;
+      font-size: 10.5px; font-weight: 800; line-height: 1; font-variant-numeric: tabular-nums;
+      box-shadow: 0 3px 7px rgba(20, 45, 95, 0.32);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .lab-step-body { margin-top: 14px; display: flex; flex-direction: column; }
+    .lab-step-title { font-size: 14px; font-weight: 800; color: var(--text); }
+    .lab-step-sub { margin-top: 5px; font-size: 12px; color: var(--muted); line-height: 1.55; }
+    .lab-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+    .lab-card { position: relative; overflow: hidden; background: linear-gradient(180deg, #FFFFFF 0%, #F5FAFF 100%); border: 1px solid rgba(36, 86, 168, 0.14); border-radius: var(--radius); padding: 32px 26px; box-shadow: 0 16px 38px rgba(20, 45, 95, 0.13), inset 0 1px 0 rgba(255, 255, 255, 0.9); transition: transform .18s ease, box-shadow .18s ease; }
+    .lab-card::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--sunrise) 0%, var(--purple) 58%, var(--ember) 100%); }
+    .lab-card:hover { transform: translateY(-5px); box-shadow: 0 26px 50px rgba(20, 45, 95, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.9); }
+    .lab-num { font-size: 13px; font-weight: 800; letter-spacing: .08em; color: var(--label); font-variant-numeric: tabular-nums; }
+    .lab-card h3 { font-size: 17px; margin: 10px 0 10px; color: var(--text); }
+    .lab-card p { font-size: 14px; color: var(--muted); line-height: 1.75; }
+    .lab-core { margin-top: 34px; padding: 22px 26px; border-left: 4px solid var(--sunrise); background: linear-gradient(100deg, rgba(74, 134, 224, 0.12), rgba(176, 71, 143, 0.06) 70%, rgba(242, 161, 94, 0.06)); border-radius: 0 12px 12px 0; box-shadow: 0 10px 26px rgba(20, 45, 95, 0.10); font-size: clamp(16px, 2.2vw, 19px); font-weight: 700; color: var(--text); max-width: 40em; line-height: 1.6; }
+    .lab-note { margin-top: 16px; font-size: 13px; color: var(--muted); max-width: 44em; line-height: 1.7; }
+
+    /* ---------- 私について ---------- */
+    .about-grid { display: grid; grid-template-columns: 300px 1fr; gap: 48px; align-items: center; margin-top: 8px; }
+    .photo-frame {
+      width: 240px; max-width: 100%; aspect-ratio: 1 / 1; margin: 0 auto;
+      border-radius: 50%; overflow: hidden;
+      background: linear-gradient(160deg, #cfe0fb, #a9c8f5);
+      border: 1px solid var(--card-border);
+      box-shadow: 0 0 0 6px rgba(74, 134, 224, 0.14), 0 22px 48px rgba(74, 134, 224, 0.30), 0 10px 34px rgba(176, 71, 143, 0.20);
+    }
+    .photo-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .about-intro { color: var(--text); font-size: 15.5px; line-height: 1.85; }
+
+    .profile-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 52px; }
+    .profile-col { background: linear-gradient(180deg, #FFFFFF 0%, #FAFCFF 100%); border: 1px solid var(--card-border); border-radius: var(--radius); padding: 28px 26px; box-shadow: 0 14px 34px rgba(20, 45, 95, 0.11), inset 0 1px 0 rgba(255, 255, 255, 0.9); }
+    .profile-col.worldview { border-top: 2px solid var(--purple); }
+    .profile-label { font-size: 12px; font-weight: 700; letter-spacing: .16em; color: var(--label); text-transform: uppercase; margin-bottom: 14px; }
+    .profile-col > p { color: var(--text); font-size: 14px; line-height: 1.8; }
+    .profile-col > p + p { margin-top: 12px; }
+    .profile-list { list-style: none; margin: 16px 0 0; padding: 0; display: grid; gap: 10px; }
+    .profile-list li { position: relative; padding-left: 18px; font-size: 13.5px; color: var(--muted); line-height: 1.65; }
+    .profile-list li::before { content: ""; position: absolute; left: 0; top: 9px; width: 6px; height: 6px; border-radius: 50%; background: var(--sunrise); }
+    .profile-col .profile-note { margin-top: 16px; font-size: 13px; color: var(--muted); border-top: 1px solid var(--border); padding-top: 14px; }
+
+    /* ---------- 作品 ---------- */
+    .works { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+    .work { display: flex; flex-direction: column; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: var(--radius); overflow: hidden; box-shadow: var(--card-shadow); transition: transform .15s ease, border-color .15s ease; }
+    .work:hover { transform: translateY(-3px); border-color: rgba(74, 134, 224, 0.5); }
+    .work-thumb { aspect-ratio: 16 / 10; background: linear-gradient(150deg, #DCE8FB 0%, #BAD2F4 55%, #93B9F0 100%); display: flex; align-items: center; justify-content: center; text-align: center; padding: 16px; color: var(--deep-blue-text); font-size: 12.5px; border-bottom: 1px solid var(--card-border); }
+    .work-body { padding: 22px 22px 24px; display: flex; flex-direction: column; gap: 9px; flex: 1; }
+    .work-tag { font-size: 11px; font-weight: 700; letter-spacing: .08em; color: var(--label); text-transform: uppercase; }
+    .work h3 { font-size: 16px; color: var(--text); }
+    .work p { font-size: 13.5px; color: var(--muted); line-height: 1.7; flex: 1; }
+    .work-link { font-size: 13px; font-weight: 700; color: var(--text); margin-top: 4px; display: inline-flex; align-items: center; gap: 8px; }
+    .work-link .arw { transition: transform .18s ease; }
+    .work:hover .work-link .arw { transform: translateX(4px); }
+    .works-note { margin-top: 24px; font-size: 13px; color: var(--muted); }
+
+    /* ---------- 開発中のもの ---------- */
+    .building-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; max-width: 740px; }
+    .building-list li { position: relative; overflow: hidden; display: flex; gap: 18px; align-items: flex-start; background: linear-gradient(160deg, #FFFFFF 0%, #EAF3FF 100%); border: 1px solid rgba(36, 86, 168, 0.22); border-radius: 16px; padding: 32px 32px; box-shadow: 0 30px 64px rgba(20, 45, 95, 0.20), inset 0 1px 0 rgba(255, 255, 255, 0.95); transition: transform .18s ease, box-shadow .18s ease; }
+    .building-list li:hover { transform: translateY(-4px); box-shadow: 0 40px 78px rgba(20, 45, 95, 0.26), inset 0 1px 0 rgba(255, 255, 255, 0.95); }
+    /* 中核サービスの存在感：上部に青→紫→朝日の太いアクセント */
+    .building-list li::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 5px; background: linear-gradient(90deg, var(--sunrise) 0%, var(--purple) 55%, var(--coral) 100%); }
+    /* 右上に朝日のコーナーグロー */
+    .building-list li::after { content: ""; position: absolute; right: -60px; top: -60px; width: 220px; height: 220px; background: radial-gradient(circle, rgba(242, 161, 94, 0.18), rgba(74, 134, 224, 0.08) 45%, transparent 70%); pointer-events: none; }
+    .building-list li > * { position: relative; z-index: 1; }
+    .building-list .dot { flex: 0 0 auto; width: 9px; height: 9px; border-radius: 50%; background: var(--sunrise); margin-top: 9px; }
+    .building-list h3 { font-size: 15.5px; margin-bottom: 5px; color: var(--text); }
+    .building-list p { font-size: 13.5px; color: var(--muted); }
+    .building-note { margin-top: 22px; font-size: 13px; color: var(--muted); }
+    /* 導入予定ツールの主な機能（ピル表示） */
+    .tool-feats { list-style: none; margin: 14px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+    .tool-feats li { font-size: 13px; font-weight: 700; color: var(--deep-blue-text); background: linear-gradient(180deg, rgba(74, 134, 224, 0.18), rgba(36, 86, 168, 0.09)); border: 1px solid rgba(36, 86, 168, 0.28); border-radius: 999px; padding: 7px 15px; box-shadow: 0 3px 8px rgba(20, 45, 95, 0.10); }
+    .tool-sub { margin-top: 14px; font-size: 12.5px; color: var(--muted); }
+    /* Toolsの見出しは2段構成。2行目「AI営業パッケージ」を商品名のように強調（コバルト・少し大きく太く） */
+    .tools-h2-brand { display: block; margin-top: 6px; font-size: 1.42em; font-weight: 800; color: var(--cobalt); letter-spacing: .01em; line-height: 1.25; }
+    /* Toolsの見出し行：テキスト＋マスコット画像を横並び（PC）。マスコットは支える印象のワンポイント */
+    .tools-head { max-width: none; display: flex; align-items: center; justify-content: space-between; gap: 36px; }
+    .tools-head-main { max-width: 660px; }
+    .tools-mascot { flex: 0 0 auto; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+    .tools-mascot img { display: block; width: 172px; height: auto; border-radius: 16px; padding: 10px; background: linear-gradient(160deg, #FFFFFF 0%, #E9F1FF 100%); border: 1px solid rgba(36, 86, 168, 0.18); box-shadow: 0 16px 34px rgba(20, 45, 95, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.9); }
+    /* ロボのセリフ吹き出し：ブランドブルーで大きめ・上向きの三角でロボを指し、一体に見せる */
+    .tools-speech { position: relative; margin: 0; padding: 11px 18px; font-size: clamp(20px, 2.2vw, 23px); font-weight: 800; color: var(--cobalt); letter-spacing: .02em; line-height: 1.3; white-space: nowrap; text-align: center; background: linear-gradient(180deg, #FFFFFF 0%, #EAF2FF 100%); border: 1px solid rgba(36, 86, 168, 0.24); border-radius: 12px; box-shadow: 0 10px 22px rgba(20, 45, 95, 0.14); }
+    .tools-speech::before { content: ""; position: absolute; top: -8px; left: 50%; width: 14px; height: 14px; transform: translateX(-50%) rotate(45deg); background: #FFFFFF; border-left: 1px solid rgba(36, 86, 168, 0.24); border-top: 1px solid rgba(36, 86, 168, 0.24); }
+
+    /* ---------- CTA帯（新しい一日の始まり） ---------- */
+    .cta-band {
+      background: linear-gradient(180deg, #6FA3EC 0%, #A9C8F5 58%, #E6F0FD 122%);
+      text-align: center; position: relative; overflow: hidden;
+    }
+    .cta-band::after {
+      content: ""; position: absolute; left: 0; right: 0; bottom: -52%; height: 100%;
+      background: radial-gradient(ellipse at center bottom, rgba(240, 128, 94, 0.30), rgba(255, 214, 170, 0.26) 38%, rgba(176, 71, 143, 0.18) 58%, transparent 74%);
+      pointer-events: none;
+    }
+    .cta-band .wrap { position: relative; z-index: 2; }
+    .cta-band h2 { font-size: clamp(24px, 3.8vw, 32px); color: var(--night); }
+    .cta-band .sub { color: var(--night); margin-top: 16px; font-size: 16px; max-width: 34em; margin-left: auto; margin-right: auto; }
+    .cta-band .btn { margin-top: 34px; padding: 18px 40px; font-size: 16.5px; }
+    .cta-band .btn-primary { background: linear-gradient(120deg, #4A86E0 0%, #6E90E4 32%, #F4A35E 76%, #F0805E 100%); color: var(--night); box-shadow: 0 14px 32px rgba(240, 128, 94, 0.42), 0 6px 16px rgba(28, 60, 122, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.4); }
+    .cta-band .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 22px 46px rgba(240, 128, 94, 0.52), 0 8px 20px rgba(28, 60, 122, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.45); }
+    .cta-contact { margin-top: 28px; font-size: 14px; color: #22315a; }
+    .cta-contact a { color: var(--night); text-decoration: underline; }
+
+    /* ---------- フッター ---------- */
+    footer { background: var(--sky-pale2); border-top: 1px solid rgba(13, 19, 48, 0.08); padding: 44px 0; }
+    .foot { display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; }
+    .foot .fbrand { font-weight: 700; color: var(--ink); font-size: 15px; }
+    .foot .fbrand .x { color: var(--sunrise); }
+    .foot .flinks { display: flex; gap: 18px; font-size: 14px; color: var(--ink-muted); flex-wrap: wrap; align-items: center; }
+    .foot .flinks a { color: var(--deep-blue-text); }
+    .foot .copy { width: 100%; font-size: 12px; color: var(--ink-muted); margin-top: 8px; }
+
+    /* ---------- レスポンシブ ---------- */
+    @media (max-width: 900px) {
+      .cards { grid-template-columns: repeat(2, 1fr); }
+      .works { grid-template-columns: repeat(2, 1fr); }
+      /* タブレット以下はh1を画面幅に応じて自然に折り返す */
+      .hero h1 { white-space: normal; }
+      /* Aboutの見出しもスマホ・タブレットでは自然に折り返す */
+      #about .section-head h2 { white-space: normal; }
+      /* Toolsの見出し行はタブレット以下で縦積み。マスコットは見出しの上に中央でワンポイント */
+      .tools-head { flex-direction: column; align-items: flex-start; gap: 20px; }
+      .tools-head-main { max-width: 100%; }
+      .tools-mascot { order: -1; align-self: center; }
+      .tools-mascot img { width: 132px; }
+      /* 3事例カードは情報量が多く、タブレット帯の3列だと大数字・HITL行が折返すため1列へ */
+      .impact-cases { grid-template-columns: 1fr; }
+      .nav-links {
+        position: fixed; top: 66px; left: 0; right: 0;
+        flex-direction: column; align-items: stretch; gap: 0;
+        background: rgba(248, 251, 255, 0.98);
+        border-bottom: 1px solid rgba(13, 19, 48, 0.08);
+        padding: 8px 24px 20px; display: none;
+      }
+      .nav-links.open { display: flex; }
+      .nav-links a { padding: 12px 0; border-bottom: 1px solid rgba(13, 19, 48, 0.08); }
+      .nav-links .btn { margin-top: 12px; }
+      .hamburger { display: block; }
+    }
+    @media (max-width: 760px) {
+      section { padding: 78px 0; }
+      .hero { padding: 88px 0 82px; background-position: center, center, center 48%, center; }
+      .hero-logo-wrap { margin-bottom: 20px; padding: 12px 22px 16px; }
+      .hero-logo { width: min(74vw, 300px); }
+      .section-head { margin-bottom: 40px; }
+      .about-grid { grid-template-columns: 1fr; gap: 28px; }
+      .photo-frame { max-width: 260px; }
+      .impact-cases { grid-template-columns: 1fr; }
+      .lab-cards { grid-template-columns: 1fr; }
+      /* Sales AIラボのフローは縦タイムラインに切替（上→下で流れが読める） */
+      .lab-flow { flex-direction: column; align-items: stretch; }
+      .lab-step { flex-direction: row; align-items: flex-start; text-align: left; gap: 16px; padding: 0 0 24px; }
+      .lab-step:not(:last-child)::after { top: 54px; left: 26px; width: 4px; height: 100%; background: linear-gradient(180deg, var(--sunrise) 0%, #8158A8 52%, var(--ember) 100%); box-shadow: 0 0 10px rgba(74, 134, 224, 0.3); }
+      .lab-node { flex: 0 0 auto; }
+      .lab-step-body { margin-top: 4px; }
+      .works { grid-template-columns: 1fr; }
+      .profile-cols { grid-template-columns: 1fr; }
+      .hero-cta .btn { width: 100%; }
+      .scroll-cue { display: none; }
+    }
+    @media (max-width: 460px) {
+      .cards { grid-template-columns: 1fr; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .js .reveal { opacity: 1; transform: none; transition: none; }
+      .card:hover, .btn:hover, .work:hover, .case:hover, .lab-card:hover, .building-list li:hover { transform: none; }
+      .js .scroll-cue { animation: none; }
+    }
+  </style>
+  <!-- reveal のちらつき防止: body描画前に .js を付ける（IO対応 かつ 非reduced-motion のときだけ隠す） -->
+  <script>
+    (function () {
+      var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if ("IntersectionObserver" in window && !reduce) document.documentElement.classList.add("js");
+    })();
+  </script>
+</head>
+<body>
+
+  <!-- ============ ヘッダー ============ -->
+  <header>
+    <div class="wrap nav">
+      <div class="brandmark">
+        営業 <span class="x">×</span> AIコンサル
+        <small>山内 康敏／中小IT企業 営業統括</small>
+      </div>
+      <nav class="nav-links" id="navLinks">
+        <a href="#impact">成果</a>
+        <a href="#practice">実践</a>
+        <a href="#lab">Sales AIラボ</a>
+        <a href="#about">私について</a>
+        <a href="#contact">相談</a>
+        <a href="#contact" class="btn btn-primary">壁打ちを予約 <span class="arw" aria-hidden="true">→</span></a>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="メニューを開く" aria-controls="navLinks" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+
+  <!-- ============ 1. ヒーロー（世界観：現場の営業に、AIの夜明けを。） ============ -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-inner">
+        <span class="hero-logo-wrap reveal">
+          <img class="hero-logo" src="assets/sales-ai-lab-logo.png" alt="Sales AIラボ ロゴ" />
+        </span>
+        <p class="hero-eyebrow reveal">IT業界の、新しい夜明け</p>
+        <h1 class="reveal">現場の営業に、AIの夜明けを。</h1>
+        <p class="diff reveal">自分の営業で回しているAIを、あなたの現場へ。</p>
+        <p class="lead reveal">営業を兼ねる社長へ。ひとりで抱えなくていい。</p>
+        <div class="hero-cta reveal">
+          <a href="#contact" class="btn btn-primary">まず30分、壁打ちから。 <span class="arw" aria-hidden="true">→</span></a>
+          <a href="#impact" class="btn btn-secondary">削減時間の目安を見る</a>
+        </div>
+      </div>
+    </div>
+    <div class="scroll-cue" aria-hidden="true"><span>Scroll</span><span class="scroll-line"></span></div>
+  </section>
+
+  <!-- ============ 2. IMPACT（Time is Money・成果） ============ -->
+  <section id="impact" class="on-dark bg-impact horizon">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="kicker"><span class="n">01</span> Impact <span class="line"></span></p>
+        <h2 class="impact-catch"><span class="tim">Time is Money.</span><br />営業の時間を、価値へ。</h2>
+        <p class="section-lead">定型業務にかかる時間をAIで削減し、営業がより価値の高い仕事に時間を使えるように。</p>
+      </div>
+
+      <!-- 最も強い数字：月間の削減時間（合計） -->
+      <div class="impact-headline reveal">
+        <div class="impact-total-value">約20<span class="u">時間 / 月</span></div>
+        <div class="impact-total-unit">実践8業務のうち、削減時間を出せた3業務の合計（1,196分 / 月）</div>
+      </div>
+
+      <!-- 概算事例 -->
+      <div class="impact-cases">
+        <article class="case reveal">
+          <p class="case-name">案件配信文作成</p>
+          <div class="case-save">約2時間20分<span class="u">/ 月 削減</span></div>
+          <dl class="case-metrics">
+            <div><dt>Before → After</dt><dd>10分 → 3分</dd></div>
+            <div><dt>削減率</dt><dd>約70%</dd></div>
+            <div><dt>月間実施回数</dt><dd>20 件 / 月</dd></div>
+          </dl>
+        </article>
+        <article class="case reveal">
+          <p class="case-name">議事録作成</p>
+          <div class="case-save">約2時間16分<span class="u">/ 月 削減</span></div>
+          <dl class="case-metrics">
+            <div><dt>Before → After</dt><dd>20分 → 3分</dd></div>
+            <div><dt>削減率</dt><dd>約85%</dd></div>
+            <div><dt>月間実施回数</dt><dd>8 回 / 月</dd></div>
+          </dl>
+        </article>
+        <article class="case reveal">
+          <p class="case-name">人材×案件マッチング・提案支援</p>
+          <div class="case-save">約15時間20分<span class="u">/ 月 削減</span></div>
+          <dl class="case-metrics">
+            <div><dt>Before → After</dt><dd>30分 → 7分</dd></div>
+            <div><dt>削減率</dt><dd>約77%</dd></div>
+            <div><dt>月間実施回数</dt><dd>40 件 / 月</dd></div>
+          </dl>
+          <!-- Human in the Loop：AI支援の範囲と、人が最終判断する範囲を明示（自動送信ではない） -->
+          <div class="case-hitl">
+            <p><b class="hitl-ai">AI支援</b>　スキルシート解析 → 案件検索 → 候補抽出 → 提案メール生成</p>
+            <p><b class="hitl-human">人が最終判断</b>　適合判断 → 提案可否 → 送信（自動送信はしません）</p>
+          </div>
+          <p class="case-note">既存のAIツール・Claude Code等を組み合わせた運用フローで対応。月40件は「人材起点／案件起点」の双方を含みます。</p>
+        </article>
+      </div>
+
+      <!-- 補助情報（削減時間より目立たせない） -->
+      <div class="impact-support reveal">
+        <span><b>20年</b>　IT営業歴</span>
+        <span class="dot-sep" aria-hidden="true">•</span>
+        <span><b>8業務</b>　AIを実践（うち1業務は一部）</span>
+      </div>
+
+      <p class="honesty">※ Before / After と月間実施回数をもとに算出した実務ベースの概算値です。</p>
+    </div>
+  </section>
+
+  <!-- ============ 3. 実践している8業務（コバルト） ============ -->
+  <section id="practice" class="on-dark bg-practice horizon">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="kicker"><span class="n">02</span> Practice <span class="line"></span></p>
+        <h2>AIを回している8つの営業業務。</h2>
+      </div>
+      <div class="cards">
+        <div class="card reveal">
+          <div class="card-top"><span class="card-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8.5 8h7M8.5 12h7M8.5 16h4"/></svg></span><span class="num">01</span></div>
+          <h3>営業資料作成</h3>
+          <p>売上実績・計画比較や営業会議資料、社内説明資料などの構成整理・表現調整にAIを使っています。Excelや元データをもとに、経営者や営業メンバーが理解しやすい資料へ整えています。</p>
+        </div>
+        <div class="card reveal">
+          <div class="card-top"><span class="card-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M12 16v4M8.5 20h7M7 11l2.5-2.5L12 11l3.5-4"/></svg></span><span class="num">02</span></div>
+          <h3>提案資料作成</h3>
+          <p>顧客の課題や案件内容を整理し、提案の構成や伝え方を考える際にAIを使っています。専門的な内容を相手に合わせて整理し、提案のポイントを明確にするのに活用しています。</p>
+        </div>
+        <div class="card reveal">
+          <div class="card-top"><span class="card-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 6.5 12 12.5l8.5-6"/></svg></span><span class="num">03</span></div>
+          <h3>案件配信文作成</h3>
+          <p>取引先やBPに送る案件メールをAIで整理しています。煩雑で読みにくい案件情報や専門的な表現を、相手に伝わりやすいメールに整えています。</p>
+        </div>
+        <div class="card reveal">
+          <div class="card-top"><span class="card-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="8" r="3"/><path d="M2.5 19.5a5.5 5.5 0 0 1 11 0"/><circle cx="17.5" cy="9" r="2.3"/><path d="M14.5 18.5a4 4 0 0 1 7 0"/></svg></span><span class="num">04</span></div>
+          <h3>人材×案件マッチング・提案支援</h3>
+          <p>エンジニアのスキルシート解析 → 案件メール検索 → 候補案件の抽出 → 提案メールのドラフト生成までをAIで支援しています。案件適合性の最終判断・提案可否・送信は、営業担当者が行います（自動送信はしません）。</p>
+        </div>
+        <div class="card reveal">
+          <div class="card-top"><span class="card-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h13a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-6l-4 3.5V15H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/><circle cx="8" cy="9.5" r="0.7"/><circle cx="11.5" cy="9.5" r="0.7"/><circle cx="15" cy="9.5" r="0.7"/></svg></span><span class="num">05</span></div>
+          <h3>面談準備</h3>
+          <p>提案後の面談に向けて、確認すべき経験・質問項目・想定される懸念点をAIで整理しています。マッチング段階ではなく、面談当日に強み・不足点・確認事項をスムーズに話せるよう準備するのに活用しています。</p>
+        </div>
+        <div class="card reveal">
+          <div class="card-top"><span class="card-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 3v18"/><path d="M12 8.5h4M12 12.5h4"/></svg></span><span class="num">06</span></div>
+          <h3>議事録作成</h3>
+          <p>営業会議の内容をAIで議事録にしています。決定事項や対応事項を整理し、あとから確認・共有しやすい形にしています。</p>
+        </div>
+        <div class="card reveal">
+          <div class="card-top"><span class="card-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4v16h16"/><path d="M8 17v-4M12 17v-7M16 17v-9"/></svg></span><span class="num">07</span></div>
+          <h3>Excel集計</h3>
+          <p>売上実績・稼働人数・計画との差異などの集計・比較表の作成にAIを使っています。計算式や表示ルール、グラフ、色分けを整理し、営業管理に使いやすい形へ整えています。</p>
+        </div>
+        <div class="card reveal">
+          <div class="card-top"><span class="card-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="6" r="2.2"/><circle cx="18" cy="7" r="2.2"/><circle cx="12" cy="17.5" r="2.2"/><path d="M7.8 7.2 10.5 15.6M16.2 8.6 13.4 15.8M8.1 6.3l7.8.5"/></svg></span><span class="num">08</span></div>
+          <h3>ナレッジ管理</h3>
+          <p>営業会議の議事録や日々の業務記録を、Claude Codeで整理しています。情報を保存するだけでなく、次の営業活動に使えるナレッジとして蓄積しています。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 4. Sales AIラボ（AI Consulting・明面へ切替） ============ -->
+  <section id="lab" class="on-light bg-lab horizon">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="kicker"><span class="n">03</span> Sales AI Lab <span class="line"></span></p>
+        <h2>Sales AIラボ</h2>
+        <p class="section-lead">営業現場で試し、測り、育てるAIエージェント支援。営業のAI化診断から、エージェントの設計・導入、運用改善の伴走までを提供します。</p>
+      </div>
+
+      <ol class="lab-flow reveal" aria-label="Sales AIラボの進め方：実践 → 測定 → 改善 → AIエージェント化 → 中小IT企業へ還元">
+        <li class="lab-step">
+          <span class="lab-node">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6"/><path d="M10 3v6.5L5.6 18a2 2 0 0 0 1.8 3h9.2a2 2 0 0 0 1.8-3L14 9.5V3"/><path d="M8 14.5h8"/></svg>
+            <span class="lab-idx">01</span>
+          </span>
+          <span class="lab-step-body"><span class="lab-step-title">実践</span><span class="lab-step-sub">現場で試す</span></span>
+        </li>
+        <li class="lab-step">
+          <span class="lab-node">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h16"/><path d="M7 20v-5"/><path d="M12 20v-9"/><path d="M17 20v-13"/></svg>
+            <span class="lab-idx">02</span>
+          </span>
+          <span class="lab-step-body"><span class="lab-step-title">測定</span><span class="lab-step-sub">効果を測る</span></span>
+        </li>
+        <li class="lab-step">
+          <span class="lab-node">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 0 1 13.7-5.6L20 8"/><path d="M20 3.5V8h-4.5"/><path d="M20 12a8 8 0 0 1-13.7 5.6L4 16"/><path d="M4 20.5V16h4.5"/></svg>
+            <span class="lab-idx">03</span>
+          </span>
+          <span class="lab-step-body"><span class="lab-step-title">改善</span><span class="lab-step-sub">改善する</span></span>
+        </li>
+        <li class="lab-step">
+          <span class="lab-node">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="2"/><rect x="10" y="10" width="4" height="4"/><path d="M10 3v2M14 3v2M10 19v2M14 19v2M3 10h2M3 14h2M19 10h2M19 14h2"/></svg>
+            <span class="lab-idx">04</span>
+          </span>
+          <span class="lab-step-body"><span class="lab-step-title">AIエージェント化</span><span class="lab-step-sub">仕組み化する</span></span>
+        </li>
+        <li class="lab-step">
+          <span class="lab-node">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="12" r="2.4"/><circle cx="18" cy="6" r="2.4"/><circle cx="18" cy="18" r="2.4"/><path d="M8.2 10.9 15.8 7.1"/><path d="M8.2 13.1 15.8 16.9"/></svg>
+            <span class="lab-idx">05</span>
+          </span>
+          <span class="lab-step-body"><span class="lab-step-title">中小IT企業へ還元</span><span class="lab-step-sub">同じ課題を持つ企業へ</span></span>
+        </li>
+      </ol>
+
+      <div class="lab-cards">
+        <div class="lab-card reveal">
+          <span class="lab-num">01</span>
+          <h3>営業業務のAI化診断</h3>
+          <p>営業フローを整理し、AIに任せる業務と、人が判断する業務を切り分けます。</p>
+        </div>
+        <div class="lab-card reveal">
+          <span class="lab-num">02</span>
+          <h3>AIエージェント設計・導入支援</h3>
+          <p>ChatGPT・Claude Code等を活用し、営業現場に合わせたAIエージェントを設計・導入します。</p>
+        </div>
+        <div class="lab-card reveal">
+          <span class="lab-num">03</span>
+          <h3>運用・改善の伴走</h3>
+          <p>プロンプト・ルール・ナレッジ・KPIを改善しながら、現場で使えるAIエージェントに育てます。</p>
+        </div>
+      </div>
+
+      <p class="lab-core reveal">営業を知っているから、現場で使えるAIエージェントを設計できる。</p>
+      <p class="lab-note reveal">※ 自社の営業現場で実践している方法をベースに、現場に合わせて設計・導入します。</p>
+    </div>
+  </section>
+
+  <!-- ============ 5. 私について（朝の光） ============ -->
+  <section id="about" class="on-light bg-about horizon">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="kicker"><span class="n">04</span> About <span class="line"></span></p>
+        <h2>IT営業20年。その現場を、AIで変えている。</h2>
+      </div>
+
+      <div class="about-grid reveal">
+        <div class="photo-frame">
+          <img src="assets/portrait.jpg" alt="山内 康敏" />
+        </div>
+        <p class="about-intro">
+          中小IT企業で、IT事業の営業部門を統括している山内 康敏です。
+          案件開拓から要員マッチング、スキルシート管理、提案、BP（ビジネスパートナー）管理、
+          クロージングまで——IT営業の一連の現場を、20年、実務で回してきました。
+        </p>
+      </div>
+
+      <div class="profile-cols">
+        <!-- 強み -->
+        <div class="profile-col reveal">
+          <p class="profile-label">強み</p>
+          <p>IT営業の全工程を、当事者として実務で回してきたこと。その同じ現場に、いま自分で生成AI・AIエージェントを入れています。営業とAI実装が、一人の中でつながっています。</p>
+          <ul class="profile-list">
+            <li>案件開拓・要員マッチング・提案・BP管理・クロージングまでの現場実務</li>
+            <li>日常の8業務にまたがる、AIの適用幅</li>
+            <li>数字は概算と実測を区別して明示する・成功も失敗も同じ比重、という発信の規律</li>
+          </ul>
+        </div>
+        <!-- 実績 -->
+        <div class="profile-col reveal">
+          <p class="profile-label">実績</p>
+          <p>IT営業歴20年。いまは営業部門全体を統括し、メンバーのマネジメントと営業組織の運営も担当しています。</p>
+          <ul class="profile-list">
+            <li>自社の営業8業務で、生成AI・AIエージェントを実務に実装（ChatGPT・Claude Codeを使い分け）</li>
+            <li>中小IT企業向けAI営業支援サービスを設計・開発（5軸マッチング／提案文生成／営業優先度算出）</li>
+          </ul>
+          <p class="profile-note">自社の営業現場で実践する当事者として、現場で使えるAI活用を形にしています。</p>
+        </div>
+        <!-- 世界観 -->
+        <div class="profile-col worldview reveal">
+          <p class="profile-label">世界観</p>
+          <p>特別なDX部門がなくても、営業の当事者がAIで現場を変えられる——それを、自分の営業で一つずつ確かめています。</p>
+          <p>机上のコンサルではなく、売る現場から。ここで確かめたことを、同じ課題を持つ中小IT企業の営業現場に還元していきたい。IT営業の現場に、少しずつ新しい朝が来るように。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 6. 作品（Works）— V1では非表示：実際に見せられる成果物が揃うまで一時非表示（架空で埋めない） ============ -->
+  <!-- V1非表示ここから（実成果物が1枚以上そろったらこのコメントを外して復帰）
+  <section id="works" class="on-light bg-works horizon">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="kicker"><span class="n">05</span> Works <span class="line"></span></p>
+        <h2>作ったもの。</h2>
+        <p class="section-lead">実際に作って、見せられる成果物だけを載せます。顧客名・単価・社内の未公開情報は匿名化し、特定されうるものは載せません。</p>
+      </div>
+      <div class="works">
+        <div class="work reveal">
+          <div class="work-thumb">サムネイル画像<br /><span class="todo">要確認：素材</span></div>
+          <div class="work-body">
+            <span class="work-tag"><span class="todo">要確認：種別</span></span>
+            <h3><span class="todo">要確認：作品名</span></h3>
+            <p><span class="todo">要確認：何を・誰のために作ったか（一次体験を1〜2行）</span></p>
+            <a class="work-link" href="#"><span class="todo">要確認：リンク（任意）</span> <span class="arw" aria-hidden="true">→</span></a>
+          </div>
+        </div>
+        <div class="work reveal">
+          <div class="work-thumb">サムネイル画像<br /><span class="todo">要確認：素材</span></div>
+          <div class="work-body">
+            <span class="work-tag"><span class="todo">要確認：種別</span></span>
+            <h3><span class="todo">要確認：作品名</span></h3>
+            <p><span class="todo">要確認：一次体験を1〜2行</span></p>
+            <a class="work-link" href="#"><span class="todo">要確認：リンク（任意）</span> <span class="arw" aria-hidden="true">→</span></a>
+          </div>
+        </div>
+        <div class="work reveal">
+          <div class="work-thumb">サムネイル画像<br /><span class="todo">要確認：素材</span></div>
+          <div class="work-body">
+            <span class="work-tag"><span class="todo">要確認：種別</span></span>
+            <h3><span class="todo">要確認：作品名</span></h3>
+            <p><span class="todo">要確認：一次体験を1〜2行</span></p>
+            <a class="work-link" href="#"><span class="todo">要確認：リンク（任意）</span> <span class="arw" aria-hidden="true">→</span></a>
+          </div>
+        </div>
+      </div>
+      <p class="works-note">※ 「開発した」と言い切れる完成品だけをここに置きます。制作途中のものは次の「作っているもの」に残します。</p>
+    </div>
+  </section>
+  V1非表示ここまで -->
+
+  <!-- ============ 7. 開発中のもの（ほぼ白） ============ -->
+  <section id="building" class="on-light bg-building horizon">
+    <div class="wrap">
+      <div class="section-head reveal tools-head">
+        <div class="tools-head-main">
+          <p class="kicker"><span class="n">05</span> Tools <span class="line"></span></p>
+          <h2 class="tools-h2">あなたの営業に寄り添う、カスタマイズ型<span class="tools-h2-brand">AI営業パッケージ</span></h2>
+          <p class="section-lead">案件配信・提案・マッチング・面談準備・集計・ナレッジ管理まで、日々の営業活動を幅広く支援。現在実践しているAI活用を、ひとつの営業支援パッケージとして展開します。</p>
+        </div>
+        <div class="tools-mascot">
+          <img src="assets/ai-support-mascot.png" alt="営業の実務（案件・人材・成果）をAIが持ち上げて支えるイメージ" />
+          <p class="tools-speech">AIがお支えします！</p>
+        </div>
+      </div>
+      <ul class="building-list">
+        <li class="reveal">
+          <span class="dot"></span>
+          <div>
+            <h3>中小IT企業向け AI営業支援ツール</h3>
+            <p>Practiceで紹介している8つの営業業務を横断し、ひとつのパッケージとしてまとめて支援する導入予定のツールです。実践中のAI運用をベースに、現場に合わせて設計・展開します。</p>
+            <ul class="tool-feats">
+              <li>案件と人材の5軸マッチング</li>
+              <li>提案文生成</li>
+              <li>営業優先度算出</li>
+            </ul>
+            <p class="tool-sub">※ 自動送信は前提としません。</p>
+          </div>
+        </li>
+        <!-- V1非表示：中身・完成度が未確認のため出さない（確認できたら復帰）
+        <li class="reveal">
+          <span class="dot"></span>
+          <div>
+            <h3>営業業務を支えるAIエージェント</h3>
+            <p><span class="todo">要確認：中身・完成度（既存スキルの設定利用か自作か／何をどこまで作ったか）</span></p>
+          </div>
+        </li>
+        -->
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ 8. 相談導線 + CTA（新しい一日の始まり） ============ -->
+  <section id="contact" class="cta-band horizon">
+    <div class="wrap">
+      <h2 class="reveal">営業 × AI、なんでも相談してください。</h2>
+      <p class="sub reveal">「何から手をつけるか分からない」でも大丈夫。営業を兼ねる社長へ——ひとりで抱えなくていい。売り込みはしません。</p>
+      <a href="mailto:yyamauchi.tt@gmail.com?subject=営業×AIの相談（30分の壁打ち）" class="btn btn-primary reveal">まず30分、壁打ちしてみる <span class="arw" aria-hidden="true">→</span></a>
+      <p class="cta-contact reveal">
+        または　<a href="mailto:yyamauchi.tt@gmail.com">✉ yyamauchi.tt@gmail.com</a>
+      </p>
+    </div>
+  </section>
+
+  </main>
+
+  <!-- ============ フッター ============ -->
+  <footer>
+    <div class="wrap foot">
+      <div class="fbrand">営業 <span class="x">×</span> AIコンサル　山内 康敏（中小IT企業 営業統括）</div>
+      <div class="flinks">
+        <a href="mailto:yyamauchi.tt@gmail.com">✉ yyamauchi.tt@gmail.com</a>
+        <!-- GitHub は公開可否を確認するまで非表示（V1では出さない・確認後に復帰） -->
+      </div>
+      <div class="copy">© 2026 営業 × AIコンサル｜Sales AIラボ</div>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      // モバイルナビの開閉
+      var toggleButton = document.getElementById("hamburger");
+      var navLinks = document.getElementById("navLinks");
+      toggleButton.addEventListener("click", function () {
+        var isOpen = navLinks.classList.toggle("open");
+        toggleButton.setAttribute("aria-expanded", String(isOpen));
+        toggleButton.setAttribute("aria-label", isOpen ? "メニューを閉じる" : "メニューを開く");
+      });
+      navLinks.querySelectorAll("a").forEach(function (link) {
+        link.addEventListener("click", function () {
+          navLinks.classList.remove("open");
+          toggleButton.setAttribute("aria-expanded", "false");
+          toggleButton.setAttribute("aria-label", "メニューを開く");
+        });
+      });
+
+      // スクロール連動の静かな立ち上がり（.js は head で付与済み・FOUC防止）
+      var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if ("IntersectionObserver" in window && !reduce) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+          });
+        }, { rootMargin: "0px 0px -8% 0px", threshold: 0.08 });
+        document.querySelectorAll(".reveal").forEach(function (el) { io.observe(el); });
+      }
+    })();
+  </script>
+</body>
+</html>
