@@ -239,11 +239,11 @@
         linear-gradient(0deg, rgba(176, 71, 143, 0.20) 0%, transparent 62%);
     }
     .hero-logo { display: block; width: clamp(300px, 34vw, 400px); height: auto; }
-    .hero-eyebrow { font-size: 13px; font-weight: 700; letter-spacing: .26em; color: var(--sky-light); margin-bottom: 22px; }
+    .hero-eyebrow { font-size: 15px; font-weight: 800; letter-spacing: .20em; color: var(--sky-light); margin-bottom: 22px; }
     /* PCでは1行（nowrap）。タブレット・スマホでは折り返す（≤900pxで解除） */
     .hero h1 { font-size: clamp(30px, 4.8vw, 48px); font-weight: 800; letter-spacing: .015em; line-height: 1.3; color: var(--paper); white-space: nowrap; }
     .hero .diff { font-size: clamp(17px, 2.4vw, 21px); font-weight: 700; color: var(--sky-light); margin: 24px auto 0; max-width: 30em; }
-    .hero .lead { margin: 20px auto 0; font-size: 16px; color: var(--paper); max-width: 32em; }
+    .hero .lead { margin: 20px auto 0; font-size: 19px; font-weight: 600; letter-spacing: -.01em; color: var(--paper); max-width: 32em; }
     .hero-cta { margin-top: 30px; display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
     /* 写真を暗くせず、文字側の局所シャドウで可読性を確保 */
     .hero-eyebrow, .hero h1, .hero .diff, .hero .lead { text-shadow: 0 2px 14px rgba(6, 12, 32, 0.60), 0 1px 3px rgba(6, 12, 32, 0.55); }
@@ -359,21 +359,23 @@
 
     /* ---------- 私について ---------- */
     .about-grid { display: grid; grid-template-columns: 300px 1fr; gap: 48px; align-items: center; margin-top: 8px; }
+    /* プロフィール写真：正円・細い白フチ・やわらかいシャドウ（清潔感・青系トーンを維持） */
     .photo-frame {
       width: 240px; max-width: 100%; aspect-ratio: 1 / 1; margin: 0 auto;
       border-radius: 50%; overflow: hidden;
-      background: linear-gradient(160deg, #cfe0fb, #a9c8f5);
-      border: 1px solid var(--card-border);
-      box-shadow: 0 0 0 6px rgba(74, 134, 224, 0.14), 0 22px 48px rgba(74, 134, 224, 0.30), 0 10px 34px rgba(176, 71, 143, 0.20);
+      background: linear-gradient(160deg, #E9F1FC, #CFE0FB);
+      border: 5px solid #FFFFFF;
+      box-shadow: 0 18px 38px rgba(20, 45, 95, 0.20), 0 6px 16px rgba(74, 134, 224, 0.16);
     }
-    .photo-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .about-intro { color: var(--text); font-size: 15.5px; line-height: 1.85; }
+    /* 顔が中央・バストアップで肩が少し入るように縦位置を調整 */
+    .photo-frame img { width: 100%; height: 100%; object-fit: cover; object-position: center 40%; display: block; }
+    .about-intro { color: var(--text); font-size: 15.5px; line-height: 1.9; }
 
     .profile-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 52px; }
     .profile-col { background: linear-gradient(180deg, #FFFFFF 0%, #FAFCFF 100%); border: 1px solid var(--card-border); border-radius: var(--radius); padding: 28px 26px; box-shadow: 0 14px 34px rgba(20, 45, 95, 0.11), inset 0 1px 0 rgba(255, 255, 255, 0.9); }
     .profile-col.worldview { border-top: 2px solid var(--purple); }
     .profile-label { font-size: 12px; font-weight: 700; letter-spacing: .16em; color: var(--label); text-transform: uppercase; margin-bottom: 14px; }
-    .profile-col > p { color: var(--text); font-size: 14px; line-height: 1.8; }
+    .profile-col > p { color: var(--text); font-size: 14px; line-height: 1.85; }
     .profile-col > p + p { margin-top: 12px; }
     .profile-list { list-style: none; margin: 16px 0 0; padding: 0; display: grid; gap: 10px; }
     .profile-list li { position: relative; padding-left: 18px; font-size: 13.5px; color: var(--muted); line-height: 1.65; }
@@ -395,7 +397,7 @@
     .works-note { margin-top: 24px; font-size: 13px; color: var(--muted); }
 
     /* ---------- 開発中のもの ---------- */
-    .building-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; max-width: 740px; }
+    .building-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; max-width: 690px; }
     .building-list li { position: relative; overflow: hidden; display: flex; gap: 18px; align-items: flex-start; background: linear-gradient(160deg, #FFFFFF 0%, #EAF3FF 100%); border: 1px solid rgba(36, 86, 168, 0.22); border-radius: 16px; padding: 32px 32px; box-shadow: 0 30px 64px rgba(20, 45, 95, 0.20), inset 0 1px 0 rgba(255, 255, 255, 0.95); transition: transform .18s ease, box-shadow .18s ease; }
     .building-list li:hover { transform: translateY(-4px); box-shadow: 0 40px 78px rgba(20, 45, 95, 0.26), inset 0 1px 0 rgba(255, 255, 255, 0.95); }
     /* 中核サービスの存在感：上部に青→紫→朝日の太いアクセント */
@@ -411,16 +413,38 @@
     .tool-feats { list-style: none; margin: 14px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
     .tool-feats li { font-size: 13px; font-weight: 700; color: var(--deep-blue-text); background: linear-gradient(180deg, rgba(74, 134, 224, 0.18), rgba(36, 86, 168, 0.09)); border: 1px solid rgba(36, 86, 168, 0.28); border-radius: 999px; padding: 7px 15px; box-shadow: 0 3px 8px rgba(20, 45, 95, 0.10); }
     .tool-sub { margin-top: 14px; font-size: 12.5px; color: var(--muted); }
+    /* 05 Tools：顧客が組み合わせられる6機能（Practiceの業務カードとは別物のコンパクトなミニカード） */
+    .tool-desc { font-size: 15px; font-weight: 700; color: var(--ink); }
+    .tool-modules { list-style: none; margin: 16px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+    .tool-modules li { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 14px; font-weight: 700; color: var(--ink); background: linear-gradient(180deg, #FFFFFF 0%, #F1F6FF 100%); border: 1px solid rgba(36, 86, 168, 0.16); border-radius: 10px; padding: 12px 8px; box-shadow: 0 3px 8px rgba(20, 45, 95, 0.06); }
+    .tool-modules li::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: linear-gradient(160deg, var(--sunrise), var(--ember)); flex: 0 0 auto; }
+    /* 実装例（既存の3機能）は区切って控えめに */
+    .tool-examples { margin-top: 20px; padding-top: 16px; border-top: 1px solid rgba(36, 86, 168, 0.12); }
+    .tool-ex-label { font-size: 11.5px; font-weight: 800; letter-spacing: .10em; text-transform: uppercase; color: var(--deep-blue-text); margin-bottom: 10px; }
+    .tool-examples .tool-feats { margin-top: 0; }
     /* Toolsの見出しは2段構成。2行目「AI営業パッケージ」を商品名のように強調（コバルト・少し大きく太く） */
     .tools-h2-brand { display: block; margin-top: 6px; font-size: 1.42em; font-weight: 800; color: var(--cobalt); letter-spacing: .01em; line-height: 1.25; }
     /* Toolsの見出し行：テキスト＋マスコット画像を横並び（PC）。マスコットは支える印象のワンポイント */
-    .tools-head { max-width: none; display: flex; align-items: center; justify-content: space-between; gap: 36px; }
+    /* 右端に孤立させず、見出しブロックの一部として自然につなげる（左詰め・上揃え） */
+    .tools-head { max-width: none; display: flex; align-items: flex-start; justify-content: flex-start; gap: 44px; }
     .tools-head-main { max-width: 660px; }
     .tools-mascot { flex: 0 0 auto; display: flex; flex-direction: column; align-items: center; gap: 12px; }
-    .tools-mascot img { display: block; width: 172px; height: auto; border-radius: 16px; padding: 10px; background: linear-gradient(160deg, #FFFFFF 0%, #E9F1FF 100%); border: 1px solid rgba(36, 86, 168, 0.18); box-shadow: 0 16px 34px rgba(20, 45, 95, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.9); }
+    .tools-mascot img { display: block; width: 130px; height: auto; border-radius: 14px; padding: 9px; background: linear-gradient(160deg, #FFFFFF 0%, #EFF4FD 100%); border: 1px solid rgba(36, 86, 168, 0.12); box-shadow: 0 10px 20px rgba(20, 45, 95, 0.10), inset 0 1px 0 rgba(255, 255, 255, 0.9); }
     /* ロボのセリフ吹き出し：ブランドブルーで大きめ・上向きの三角でロボを指し、一体に見せる */
     .tools-speech { position: relative; margin: 0; padding: 11px 18px; font-size: clamp(20px, 2.2vw, 23px); font-weight: 800; color: var(--cobalt); letter-spacing: .02em; line-height: 1.3; white-space: nowrap; text-align: center; background: linear-gradient(180deg, #FFFFFF 0%, #EAF2FF 100%); border: 1px solid rgba(36, 86, 168, 0.24); border-radius: 12px; box-shadow: 0 10px 22px rgba(20, 45, 95, 0.14); }
     .tools-speech::before { content: ""; position: absolute; top: -8px; left: 50%; width: 14px; height: 14px; transform: translateX(-50%) rotate(45deg); background: #FFFFFF; border-left: 1px solid rgba(36, 86, 168, 0.24); border-top: 1px solid rgba(36, 86, 168, 0.24); }
+
+    /* ---------- 06 Connect（SNS） ---------- */
+    /* 見出しとカードの余白を少し詰めて締まって見せる（他セクションのsection-headは不変） */
+    #connect .section-head { margin-bottom: 32px; }
+    .connect-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; max-width: 720px; margin: 0 auto; }
+    .connect-card { display: flex; flex-direction: column; align-items: center; gap: 16px; text-align: center; text-decoration: none; cursor: pointer; background: linear-gradient(180deg, #FFFFFF 0%, #F4F9FF 100%); border: 1px solid rgba(36, 86, 168, 0.16); border-radius: 16px; padding: 34px 28px; box-shadow: 0 14px 32px rgba(20, 45, 95, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.9); transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease; }
+    /* クリック可能を控えめに示す：ホバーで3pxだけ浮く */
+    .connect-card:hover { text-decoration: none; transform: translateY(-3px); border-color: rgba(74, 134, 224, 0.5); box-shadow: 0 18px 38px rgba(20, 45, 95, 0.16); }
+    .connect-ico { width: 46px; height: 46px; display: inline-flex; }
+    .connect-ico svg { width: 100%; height: 100%; display: block; }
+    .connect-name { font-size: 18px; font-weight: 800; color: var(--cobalt); letter-spacing: .01em; }
+    .connect-qr { width: 150px; height: 150px; display: block; border-radius: 10px; border: 1px solid rgba(13, 19, 48, 0.08); background: #FFFFFF; }
 
     /* ---------- CTA帯（新しい一日の始まり） ---------- */
     .cta-band {
@@ -451,6 +475,20 @@
     .foot .copy { width: 100%; font-size: 12px; color: var(--ink-muted); margin-top: 8px; }
 
     /* ---------- レスポンシブ ---------- */
+    /* PC（901px以上）だけ、整いすぎた中央揃えをわずかに崩して非対称のリズムを出す。
+       reveal のアニメーションは transform を使うため、競合しない position:relative + left でずらす。
+       .hero は overflow:hidden なので横スクロールは発生しない。900px以下は不適用＝中央揃えのまま */
+    @media (min-width: 901px) {
+      .hero-logo-wrap { position: relative; left: -92px; }
+      .hero-eyebrow { position: relative; left: -44px; }
+      .hero .lead { position: relative; left: 30px; }
+      /* PCのみ、AIロボ＋吹き出しをアクセント程度までコンパクトに（モバイルの各値は不変・下の760px以下ブロックが担保） */
+      .tools-mascot { gap: 8px; margin-top: 30px; }
+      .tools-mascot img { width: 92px; }
+      .tools-speech { font-size: 15px; padding: 7px 12px; border-radius: 9px; }
+      .tools-speech::before { top: -6px; width: 11px; height: 11px; }
+    }
+
     @media (max-width: 900px) {
       .cards { grid-template-columns: repeat(2, 1fr); }
       .works { grid-template-columns: repeat(2, 1fr); }
@@ -462,7 +500,13 @@
       .tools-head { flex-direction: column; align-items: flex-start; gap: 20px; }
       .tools-head-main { max-width: 100%; }
       .tools-mascot { order: -1; align-self: center; }
-      .tools-mascot img { width: 132px; }
+      .tools-mascot img { width: 104px; }
+      /* 6機能はスマホで2列に自然折り返し */
+      .tool-modules { grid-template-columns: repeat(2, 1fr); }
+      /* ConnectはPC横並び→スマホ縦並び */
+      .connect-grid { grid-template-columns: 1fr; max-width: 360px; }
+      /* 最終CTAボタン：小型端末(〜320px)でのはみ出し防止。スマホは幅100%基本（上限340px・中央）＋左右paddingを詰める */
+      .cta-band .btn-primary { display: flex; width: 100%; max-width: 340px; margin: 34px auto 0; padding: 16px 18px; }
       /* 3事例カードは情報量が多く、タブレット帯の3列だと大数字・HITL行が折返すため1列へ */
       .impact-cases { grid-template-columns: 1fr; }
       .nav-links {
@@ -505,7 +549,7 @@
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
       .js .reveal { opacity: 1; transform: none; transition: none; }
-      .card:hover, .btn:hover, .work:hover, .case:hover, .lab-card:hover, .building-list li:hover { transform: none; }
+      .card:hover, .btn:hover, .work:hover, .case:hover, .lab-card:hover, .building-list li:hover, .connect-card:hover { transform: none; }
       .js .scroll-cue { animation: none; }
     }
   </style>
@@ -757,12 +801,11 @@
 
       <div class="about-grid reveal">
         <div class="photo-frame">
-          <img src="assets/portrait.jpg" alt="山内 康敏" />
+          <img src="assets/portrait-jyasu.jpg" alt="山内 康敏" />
         </div>
         <p class="about-intro">
-          中小IT企業で、IT事業の営業部門を統括している山内 康敏です。
-          案件開拓から要員マッチング、スキルシート管理、提案、BP（ビジネスパートナー）管理、
-          クロージングまで——IT営業の一連の現場を、20年、実務で回してきました。
+          中小IT企業でIT事業の営業部門を統括している山内 康敏です。
+          案件開拓から要員マッチング、提案、BP管理、クロージングまで、IT営業の現場を20年、実務で回してきました。
         </p>
       </div>
 
@@ -770,28 +813,31 @@
         <!-- 強み -->
         <div class="profile-col reveal">
           <p class="profile-label">強み</p>
-          <p>IT営業の全工程を、当事者として実務で回してきたこと。その同じ現場に、いま自分で生成AI・AIエージェントを入れています。営業とAI実装が、一人の中でつながっています。</p>
+          <p>IT営業の現場を、当事者として20年回してきたこと。その現場で今も、生成AI・AIエージェントを実務に入れて磨いています。</p>
           <ul class="profile-list">
-            <li>案件開拓・要員マッチング・提案・BP管理・クロージングまでの現場実務</li>
-            <li>日常の8業務にまたがる、AIの適用幅</li>
-            <li>数字は概算と実測を区別して明示する・成功も失敗も同じ比重、という発信の規律</li>
+            <li>案件開拓〜提案〜BP管理〜クロージングまで対応</li>
+            <li>日常8業務にまたがるAI活用</li>
+            <li>概算と実測を分けて示す運用</li>
           </ul>
         </div>
         <!-- 実績 -->
         <div class="profile-col reveal">
           <p class="profile-label">実績</p>
-          <p>IT営業歴20年。いまは営業部門全体を統括し、メンバーのマネジメントと営業組織の運営も担当しています。</p>
+          <p>営業部門を統括しながら、営業実務のAI活用を実践。現場で使える形に落とし込み、中小IT企業向けのAI営業支援にも展開しています。</p>
           <ul class="profile-list">
-            <li>自社の営業8業務で、生成AI・AIエージェントを実務に実装（ChatGPT・Claude Codeを使い分け）</li>
-            <li>中小IT企業向けAI営業支援サービスを設計・開発（5軸マッチング／提案文生成／営業優先度算出）</li>
+            <li>自社の営業8業務でAI活用を実践</li>
+            <li>5軸マッチング／提案文生成／営業優先度算出を設計</li>
+            <li>現場起点で改善を継続</li>
           </ul>
-          <p class="profile-note">自社の営業現場で実践する当事者として、現場で使えるAI活用を形にしています。</p>
         </div>
         <!-- 世界観 -->
         <div class="profile-col worldview reveal">
           <p class="profile-label">世界観</p>
-          <p>特別なDX部門がなくても、営業の当事者がAIで現場を変えられる——それを、自分の営業で一つずつ確かめています。</p>
-          <p>机上のコンサルではなく、売る現場から。ここで確かめたことを、同じ課題を持つ中小IT企業の営業現場に還元していきたい。IT営業の現場に、少しずつ新しい朝が来るように。</p>
+          <p>営業の当事者が動けば、現場は少しずつ変えられる。机上のコンサルではなく、売る現場で確かめたことを、同じ課題を持つ中小IT企業へ還元していきたい。</p>
+          <ul class="profile-list">
+            <li>特別なDX部門がなくても始められる</li>
+            <li>現場で使えるAI活用を広げていく</li>
+          </ul>
         </div>
       </div>
     </div>
@@ -859,12 +905,23 @@
           <span class="dot"></span>
           <div>
             <h3>中小IT企業向け AI営業支援ツール</h3>
-            <p>Practiceで紹介している8つの営業業務を横断し、ひとつのパッケージとしてまとめて支援する導入予定のツールです。実践中のAI運用をベースに、現場に合わせて設計・展開します。</p>
-            <ul class="tool-feats">
-              <li>案件と人材の5軸マッチング</li>
-              <li>提案文生成</li>
-              <li>営業優先度算出</li>
+            <p class="tool-desc">必要な機能を、あなたの営業に合わせて組み合わせます。</p>
+            <ul class="tool-modules" aria-label="組み合わせられる機能">
+              <li>案件配信</li>
+              <li>マッチング</li>
+              <li>提案支援</li>
+              <li>面談準備</li>
+              <li>集計・分析</li>
+              <li>ナレッジ管理</li>
             </ul>
+            <div class="tool-examples">
+              <p class="tool-ex-label">実装例</p>
+              <ul class="tool-feats">
+                <li>案件と人材の5軸マッチング</li>
+                <li>提案文生成</li>
+                <li>営業優先度算出</li>
+              </ul>
+            </div>
             <p class="tool-sub">※ 自動送信は前提としません。</p>
           </div>
         </li>
@@ -881,12 +938,38 @@
     </div>
   </section>
 
+  <!-- ============ 6. Connect（SNS でつながる） ============ -->
+  <section id="connect" class="on-light bg-about horizon">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="kicker"><span class="n">06</span> Connect <span class="line"></span></p>
+        <h2>SNSでも、ぜひつながってください。</h2>
+      </div>
+      <div class="connect-grid">
+        <a class="connect-card reveal" href="https://www.facebook.com/inchrist.yasu/?locale=ja_JP" target="_blank" rel="noopener noreferrer" aria-label="Facebookのプロフィールを新しいタブで開く">
+          <span class="connect-ico">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path fill="#1877F2" d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"/></svg>
+          </span>
+          <span class="connect-name">Facebook</span>
+          <img class="connect-qr" src="assets/qr-facebook.png" width="150" height="150" alt="FacebookプロフィールのQRコード" />
+        </a>
+        <a class="connect-card reveal" href="https://www.linkedin.com/in/jyasu-yamauchi/" target="_blank" rel="noopener noreferrer" aria-label="LinkedInのプロフィールを新しいタブで開く">
+          <span class="connect-ico">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path fill="#0A66C2" d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854zm4.943 12.248V6.169H2.542v7.225zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248S2.4 3.226 2.4 3.934c0 .694.521 1.248 1.327 1.248zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.42-1.288-3.548-3.005-3.548-1.373 0-1.984.755-2.328 1.286v.027h-.016l.016-.027V6.169h-2.4c.03.678 0 7.225 0 7.225z"/></svg>
+          </span>
+          <span class="connect-name">LinkedIn</span>
+          <img class="connect-qr" src="assets/qr-linkedin.png" width="150" height="150" alt="LinkedInプロフィールのQRコード" />
+        </a>
+      </div>
+    </div>
+  </section>
+
   <!-- ============ 8. 相談導線 + CTA（新しい一日の始まり） ============ -->
   <section id="contact" class="cta-band horizon">
     <div class="wrap">
-      <h2 class="reveal">営業 × AI、なんでも相談してください。</h2>
-      <p class="sub reveal">「何から手をつけるか分からない」でも大丈夫。営業を兼ねる社長へ——ひとりで抱えなくていい。売り込みはしません。</p>
-      <a href="mailto:yyamauchi.tt@gmail.com?subject=営業×AIの相談（30分の壁打ち）" class="btn btn-primary reveal">まず30分、壁打ちしてみる <span class="arw" aria-hidden="true">→</span></a>
+      <h2 class="reveal">営業 × AI、まずは30分無料で、できることを一緒に考えませんか。</h2>
+      <p class="sub reveal">「何からAI化すればいいか分からない」でも大丈夫。今の営業業務を伺い、AIでできること・人が担うことを具体的に見つけていきます。</p>
+      <a href="https://calendar.app.google/5gBhnFdazrJU6NeD7" target="_blank" rel="noopener noreferrer" class="btn btn-primary reveal">まず30分、壁打ちしてみる <span class="arw" aria-hidden="true">→</span></a>
       <p class="cta-contact reveal">
         または　<a href="mailto:yyamauchi.tt@gmail.com">✉ yyamauchi.tt@gmail.com</a>
       </p>
